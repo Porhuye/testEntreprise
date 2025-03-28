@@ -1,6 +1,5 @@
+/*
 const mysql = require("mysql2");
-//const { Sequelize } = require('sequelize');
-
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -8,15 +7,33 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME,
     connectionLimit: 10
 });
-/*
-const sequelize = new Sequelize('test_entreprise', 'root', null, { //database , username , password
-    dialect: 'mysql'
-  })
-
-// Option 3: Passing parameters separately (other dialects)
-const sequelize = new Sequelize('test_entreprise', 'root', null, {
-  host: 'localhost',
-  dialect: 'mysql' 
-});
-*/
 module.exports = pool.promise();
+*/
+
+const { Sequelize } = require("sequelize");
+require("dotenv").config(); // Charge les variables d'environnement
+
+const sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
+    {
+        host: process.env.DB_HOST || "localhost",
+        dialect: "mysql",
+        logging: false,
+    }
+);
+
+async function testDBConnection() {
+    try {
+        await sequelize.authenticate();
+        console.log("Connexion à la base de données réussie !");
+    } catch (error) {
+        console.error("Erreur de connexion à la base de données :", error);
+    }
+}
+
+testDBConnection();
+
+module.exports = sequelize;
+
