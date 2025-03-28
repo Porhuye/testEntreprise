@@ -12,13 +12,13 @@ const Utilisateur = require("../models/Utilisateur");
 //http://localhost:3000/user
 async function addUser(req, res) {
     try {
-        const { nom, prenom, dateNaissance } = req.body;
+        const { nom, prenom, dateNaissance, motDePasse } = req.body;
 
-        if (!nom || !prenom || !dateNaissance) {
+        if (!nom || !prenom || !dateNaissance || !motDePasse) {
             return res.status(400).json({ message: "Tous les champs sont requis !" });
         }
 
-        const user = await Utilisateur.create({ nom, prenom, dateNaissance });
+        const user = await Utilisateur.create({ nom, prenom, dateNaissance,motDePasse });
         console.log("ID généré :", user.id);
 
         res.status(201).json({ message: "Utilisateur ajouté avec succès !" });
