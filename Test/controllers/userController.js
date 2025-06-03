@@ -1,5 +1,7 @@
 const pool = require("../config/db");
 const Utilisateur = require("../models/Utilisateur");
+const express = require('express');
+const router = express.Router();
 
 ///CONNECTION BD///
 async function testDBConnection(req, res) {
@@ -12,4 +14,4 @@ async function testDBConnection(req, res) {
     }
 }
 
-module.exports = { testDBConnection};
+module.exports = { testDBConnection, router };

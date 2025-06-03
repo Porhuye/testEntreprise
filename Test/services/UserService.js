@@ -5,11 +5,12 @@ Pourquoi ORM ?
 Pourquoi Sequelize ?
 → Sequelize est un ORM pour Node.js qui supporte plusieurs bases de données SQL (PostgreSQL, MySQL, SQLite, MSSQL). Il offre une API simple, des migrations, des validations, et une bonne intégration avec Express.
 */
-
+const jwt = require("jsonwebtoken");    
 const Utilisateur = require("../models/Utilisateur");
 
 /// ADD ///
 //http://localhost:3000/user
+
 async function addUser(req, res) {
     try {
         const { nom, prenom, dateNaissance, motDePasse } = req.body;
@@ -18,10 +19,13 @@ async function addUser(req, res) {
             return res.status(400).json({ message: "Tous les champs sont requis !" });
         }
 
-        const user = await Utilisateur.create({ nom, prenom, dateNaissance,motDePasse });
+        const user = await Utilisateur.create({ nom, prenom, dateNaissance, motDePasse });
         console.log("ID généré :", user.id);
 
-        res.status(201).json({ message: "Utilisateur ajouté avec succès !" });
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        console.log("Token généré :", token);
+
+        res.status(201).json({ message: "Utilisateur ajouté avec succès !", token });
     } catch (error) {
         console.error("Erreur lors de l'ajout de l'utilisateur :", error);
         res.status(500).json({ message: "Erreur interne du serveur" });

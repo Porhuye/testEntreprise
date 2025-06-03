@@ -8,6 +8,11 @@ const {
   deleteUser,
 } = require("../services/UserService.js");
 
+const authWSO2 = require("../middlewares/authWSO2"); // <-- ajout du middleware
+
+// Middleware WSO2 appliqué à toutes les routes
+router.use(authWSO2);
+
 // GET tous les utilisateurs
 router.get("/", getUsers);
 

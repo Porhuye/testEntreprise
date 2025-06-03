@@ -1,0 +1,70 @@
+<!-- views/login.ejs -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connexion</title>
+  <style>
+    /* Un CSS minimal pour centrer le formulaire */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    .container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.2rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .error {
+      color: red;
+      margin-top: 1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Connexion</h2>
+    <% if (typeof errorMessage !== "undefined") { %>
+      <p class="error"><%= errorMessage %></p>
+    <% } %>
+    <form action="/auth/login" method="POST">
+      <label for="username">Nom d’utilisateur</label>
+      <input type="text" id="username" name="username" required />
+
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit">Se connecter</button>
+    </form>
+  </div>
+</body>
+</html>

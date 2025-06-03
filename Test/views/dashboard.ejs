@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mon Tableau de Bord</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+    }
+    .logout {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bienvenue, <%= user.nom %> !</h1>
+  <p>Ceci est votre zone protégée.</p>
+
+  <a class="logout" href="/auth/logout">Déconnexion</a>
+
+  <!-- Par exemple, afficher la liste des utilisateurs -->
+  <% if (users && users.length > 0) { %>
+    <h2>Liste des utilisateurs :</h2>
+    <ul>
+      <% users.forEach(u => { %>
+        <li><%= u.nom %> &mdash; <%= u.prenom %></li>
+      <% }); %>
+    </ul>
+  <% } %>
+</body>
+</html>
