@@ -1,6 +1,12 @@
+// app.js
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const path = require("path");
+const cookieParser = require("cookie-parser");
+
+// --- Parser les formulaires HTML (x-www-form-urlencoded) ---
+app.use(express.urlencoded({ extended: true }));
 
 // Middlewares globaux
 app.use(express.json());
@@ -9,8 +15,7 @@ app.use(express.json());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-//cookies
-const cookieParser = require("cookie-parser");
+// cookies
 app.use(cookieParser());
 
 // Routes principales
