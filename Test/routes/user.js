@@ -1,3 +1,5 @@
+
+// routes/user.js - RESTful avec :userId pour PUT et DELETE
 const express = require("express");
 const router = express.Router();
 const {
@@ -7,25 +9,24 @@ const {
   putUser,
   deleteUser,
 } = require("../services/UserService.js");
+const authWSO2 = require("../middlewares/authWSO2");
 
-const authWSO2 = require("../middlewares/authWSO2"); // <-- ajout du middleware
-
-// Middleware WSO2 appliqué à toutes les routes
+// Appliquer le middleware WSO2 à toutes les routes utilisateur
 router.use(authWSO2);
 
-// GET tous les utilisateurs
+// GET /user - lister tous les utilisateurs
 router.get("/", getUsers);
 
-// GET un utilisateur par ID
+// GET /user/:userId - récupérer un utilisateur par ID
 router.get("/:userId", getUser);
 
-// POST : ajouter un utilisateur
+// POST /user - ajouter un nouvel utilisateur
 router.post("/", addUser);
 
-// PUT : modifier un utilisateur
-router.put("/", putUser);
+// PUT /user/:userId - modifier un utilisateur
+router.put("/:userId", putUser);
 
-// DELETE : supprimer un utilisateur
-router.delete("/", deleteUser);
+// DELETE /user/:userId - supprimer un utilisateur
+router.delete("/:userId", deleteUser);
 
 module.exports = router;
