@@ -5,6 +5,7 @@ const app = express();
 const path = require("path");
 const cookieParser = require("cookie-parser");
 
+
 // --- Parser les formulaires HTML (x-www-form-urlencoded) ---
 app.use(express.urlencoded({ extended: true }));
 
@@ -25,5 +26,11 @@ app.use("/", routes);
 // Middleware de gestion d'erreur
 const errorHandler = require("./middlewares/errorHandler");
 app.use(errorHandler);
+
+
+app.use(
+  "/bootstrap",
+  express.static(path.join(__dirname, "node_modules", "bootstrap", "dist"))
+);
 
 module.exports = app;

@@ -1,35 +1,57 @@
+
+<!-- views/dashboard.ejs -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mon Tableau de Bord</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 2rem;
-    }
-    .logout {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-    }
-  </style>
+  <title>Tableau de Bord</title>
+  <!-- Bootstrap CSS CDN -->
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUa3Yp1+gBtD1Z2GmPfQeRHF9g6kz4XhI4oQ8haX3MGp5BxVXp7y1ObM+4Eo" crossorigin="anonymous">
 </head>
 <body>
-  <h1>Bienvenue, <%= user.nom %> !</h1>
-  <p>Ceci est votre zone protégée.</p>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">MonApp</a>
+      <div class="d-flex">
+        <span class="navbar-text text-white me-3">Bonjour, <%= user.nom %></span>
+        <a class="btn btn-outline-light" href="/auth/logout">Déconnexion</a>
+      </div>
+    </div>
+  </nav>
 
-  <a class="logout" href="/auth/logout">Déconnexion</a>
+  <div class="container mt-5">
+    <h1 class="mb-4">Bienvenue, <%= user.nom %> !</h1>
+    <% if (users && users.length > 0) { %>
+      <div class="card">
+        <div class="card-header">
+          Liste des utilisateurs
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% users.forEach(u => { %>
+                <tr>
+                  <td><%= u.nom %></td>
+                  <td><%= u.prenom %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% } else { %>
+      <p>Aucun utilisateur trouvé.</p>
+    <% } %>
+  </div>
 
-  <!-- Par exemple, afficher la liste des utilisateurs -->
-  <% if (users && users.length > 0) { %>
-    <h2>Liste des utilisateurs :</h2>
-    <ul>
-      <% users.forEach(u => { %>
-        <li><%= u.nom %> &mdash; <%= u.prenom %></li>
-      <% }); %>
-    </ul>
-  <% } %>
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeo5uHIcQZHxw3k/Ss0v3E5ZV7bdG+gFVYFob3p5QBsU7Zy1" crossorigin="anonymous"></script>
 </body>
 </html>

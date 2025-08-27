@@ -5,66 +5,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Connexion</title>
-  <style>
-    /* Un CSS minimal pour centrer le formulaire */
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-    }
-    .container {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
-      width: 300px;
-    }
-    label {
-      display: block;
-      margin-top: 1rem;
-    }
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 0.5rem;
-      margin-top: 0.2rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      margin-top: 1.5rem;
-      width: 100%;
-      padding: 0.7rem;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .error {
-      color: red;
-      margin-top: 1rem;
-      text-align: center;
-    }
-  </style>
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUa3Yp1+gBtD1Z2GmPfQeRHF9g6kz4XhI4oQ8haX3MGp5BxVXp7y1ObM+4Eo" crossorigin="anonymous">
 </head>
-<body>
-  <div class="container">
-    <h2>Connexion</h2>
-    <% if (typeof errorMessage !== "undefined") { %>
-      <p class="error"><%= errorMessage %></p>
-    <% } %>
-    <form action="/auth/login" method="POST">
-      <label for="username">Nom d’utilisateur</label>
-      <input type="text" id="username" name="username" required />
-
-      <label for="password">Mot de passe</label>
-      <input type="password" id="password" name="password" required />
-
-      <button type="submit">Se connecter</button>
-    </form>
+<body class="bg-light">
+  <div class="container d-flex align-items-center justify-content-center" style="height: 100vh;">
+    <div class="card shadow-sm w-100" style="max-width: 400px;">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">Connexion</h3>
+        <% if (typeof errorMessage !== 'undefined') { %>
+          <div class="alert alert-danger text-center"><%= errorMessage %></div>
+        <% } %>
+        <form action="/auth/login" method="POST">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="username" name="username" placeholder="Nom d’utilisateur" required>
+            <label for="username">Nom d’utilisateur</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
+            <label for="password">Mot de passe</label>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+        </form>
+      </div>
+    </div>
   </div>
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeo5uHIcQZHxw3k/Ss0v3E5ZV7bdG+gFVYFob3p5QBsU7Zy1" crossorigin="anonymous"></script>
 </body>
 </html>

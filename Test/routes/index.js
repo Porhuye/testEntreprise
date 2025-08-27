@@ -1,36 +1,30 @@
-// routes/index.js
+// routes/index.js (CommonJS)
 const express = require("express");
+const path = require("path");
+
+const authWSO2 = require("../middlewares/authWSO2");
+const { testDBConnection } = require("../controllers/userController");
+const authRoutes = require("./auth");
+const userRoutes = require("./user");
+
 const router = express.Router();
 
-// Importer le middleware authWSO2 AVANT de l’utiliser
-const authWSO2 = require("../middlewares/authWSO2");
+// Page d’accueil -> login
+router.get("/", (req, res) => res.redirect("/auth/login"));
 
-// Importer le modèle Sequelize Utilisateur
-const Utilisateur = require("../models/Utilisateur");
-
-// Importer le contrôleur pour la route de test DB
-const { testDBConnection } = require("../controllers/userController");
-
-// Route de test DB
+// Test DB
 router.get("/test-db", testDBConnection);
 
-// Authentification (login/logout)
-router.use("/auth", require("./auth"));
+// Auth
+router.use("/auth", authRoutes);
 
-// Dashboard (protégé avec authWSO2)
-router.get("/dashboard", authWSO2, async (req, res) => {
-  try {
-    // Récupérer tous les utilisateurs (ou autre logique)
-    const users = await Utilisateur.findAll();
-    // Passer l’utilisateur courant (req.user) + liste pour affichage
-    res.render("dashboard", { user: req.user, users });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Erreur interne");
-  }
+// Dashboard protégé
+router.get("/dashboard", authWSO2, (req, res) => {
+  // req.user est posé par authWSO2
+  res.render("dashboard", { user: req.user });
 });
 
-// Route utilisateur (GET/POST/PUT/DELETE)
-router.use("/user", require("./user"));
+// API Users protégée
+router.use("/user", authWSO2, userRoutes);
 
 module.exports = router;
