@@ -1,4 +1,5 @@
 // middlewares/requireAuth.js
+// ce que tu as besoin de mettre dans le formulaire de chaque vue EJS protégée
 const { withLogto } = require('@logto/express');
 const logtoConfig = require('../config/logto');
 
